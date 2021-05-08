@@ -24,8 +24,8 @@ OPERATIONS = [
 ]
 
 verbose_logging = False
-nest_folders = False
 
+# Data about each file including metadata
 class FileData:
     def __init__(self, path, name):
         self.path = path
@@ -39,12 +39,6 @@ class FileData:
 
         self.cdate = datetime.datetime.fromtimestamp(self.ctime)
 
-def is_windows():
-    return os.name == 'nt'
-
-def is_linux():
-    return not is_windows()
-
 def print_operations():
     print('Valid operations:')
     for o in OPERATIONS:
@@ -56,7 +50,7 @@ def is_media_file(file):
         return
     
     ext = file[dot:]
-
+    # todo: decide using file extensions
     return True
 
 def get_media(src_folder):
@@ -122,7 +116,8 @@ def sort_folder_num_month(photo, out_folder, nest=False):
 
 def sort_photos(src_folder, operation, out_folder):
     photos = get_media(src_folder)
-
+    
+    # select function for operation
     operation_func = None
     if operation == OP_NUM_DAY:
         operation_func = sort_folder_num_day
